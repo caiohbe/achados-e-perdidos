@@ -9,7 +9,7 @@ import handlePrismaError from 'src/common/errors/prisma-error.handler';
 export class UsersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async create({ nome, email, cpf }: CreateUserDto) {
+  async create({ nome, email, cpf }: CreateUserDto): Promise<void> {
     try {
       await this.prisma.user.create({
         data: { nome, email, cpf },
@@ -39,7 +39,7 @@ export class UsersRepository {
     }
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     try {
       return this.prisma.user.update({ data: updateUserDto, where: { id } });
     } catch (error) {
@@ -47,7 +47,7 @@ export class UsersRepository {
     }
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<void> {
     try {
       await this.prisma.user.delete({ where: { id } });
     } catch (error) {
