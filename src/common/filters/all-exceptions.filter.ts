@@ -17,20 +17,22 @@ export class AllExceptionsFilter implements ExceptionFilter {
     const response = ctx.getResponse<Response>();
     const request = ctx.getRequest<Request>();
 
-    this.logger.error(
-      'Erro não tratado capturado',
-      exception instanceof Error ? exception.stack : '',
-    );
+    const isHttpException = exception instanceof HttpException;
 
-    const status =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+    const status = isHttpException
+      ? exception.getStatus()
+      : HttpStatus.INTERNAL_SERVER_ERROR;
 
-    const message =
-      exception instanceof HttpException
-        ? exception.getResponse()
-        : 'Internal server error';
+    const message = isHttpException
+      ? this.normalizeMessage(exception.getResponse())
+      : 'Internal server error';
+
+    if (!isHttpException) {
+      this.logger.error(
+        `Erro não tratado capturado: ${message}`,
+        exception instanceof Error ? exception.stack : String(exception),
+      );
+    }
 
     response.status(status).json({
       statusCode: status,
@@ -38,5 +40,19 @@ export class AllExceptionsFilter implements ExceptionFilter {
       timestamp: new Date().toISOString(),
       path: request.url,
     });
+  }
+
+  private normalizeMessage(response: string | object): string {
+    if (typeof response === 'string') {
+      return response;
+    }
+    if (
+      typeof response === 'object' &&
+      'message' in response &&
+      typeof response.message === 'string'
+    ) {
+      return response.message;
+    }
+    return JSON.stringify(response);
   }
 }
