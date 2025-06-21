@@ -1,15 +1,25 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  ParseIntPipe,
+  ValidationPipe,
+} from '@nestjs/common';
 import { LocaisService } from './locais.service';
-import { CreateLocaiDto } from './dto/create-locai.dto';
-import { UpdateLocaiDto } from './dto/update-locai.dto';
+import { CreateLocaisDto } from './dto/create-locai.dto';
+import { UpdateLocaisDto } from './dto/update-locai.dto';
 
 @Controller('locais')
 export class LocaisController {
   constructor(private readonly locaisService: LocaisService) {}
 
   @Post()
-  create(@Body() createLocaiDto: CreateLocaiDto) {
-    return this.locaisService.create(createLocaiDto);
+  create(@Body(ValidationPipe) createLocaisDto: CreateLocaisDto) {
+    return this.locaisService.create(createLocaisDto);
   }
 
   @Get()
@@ -17,13 +27,16 @@ export class LocaisController {
     return this.locaisService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.locaisService.findOne(+id);
+  @Get(':nome')
+  findOne(@Param('nome') nome: string) {
+    return this.locaisService.findOne(nome);
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLocaiDto: UpdateLocaiDto) {
+  update(
+    @Param('id') id: string,
+    @Body(ValidationPipe) updateLocaiDto: UpdateLocaisDto,
+  ) {
     return this.locaisService.update(+id, updateLocaiDto);
   }
 

@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateLocaiDto } from './dto/create-locai.dto';
-import { UpdateLocaiDto } from './dto/update-locai.dto';
+import { CreateLocaisDto } from './dto/create-locai.dto';
+import { UpdateLocaisDto } from './dto/update-locai.dto';
 
 @Injectable()
 export class LocaisService {
-  create(createLocaiDto: CreateLocaiDto) {
+  create(createLocaiDto: CreateLocaisDto) {
     return 'This action adds a new locai';
   }
 
@@ -12,11 +12,11 @@ export class LocaisService {
     return `This action returns all locais`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} locai`;
+  findOne(nome: string) {
+    return `This action returns a #${nome} locai`;
   }
 
-  update(id: number, updateLocaiDto: UpdateLocaiDto) {
+  update(id: number, updateLocaiDto: UpdateLocaisDto) {
     return `This action updates a #${id} locai`;
   }
 
