@@ -19,9 +19,9 @@ export class UsersRepository {
     }
   }
 
-  findAll(): Promise<User[]> {
+  async findAll(): Promise<User[]> {
     try {
-      return this.prisma.user.findMany();
+      return await this.prisma.user.findMany();
     } catch (error) {
       handlePrismaError(error);
     }
@@ -29,7 +29,7 @@ export class UsersRepository {
 
   async findOne(cpf: string): Promise<User> {
     try {
-      return this.prisma.user.findUnique({
+      return await this.prisma.user.findUniqueOrThrow({
         where: {
           cpf,
         },
