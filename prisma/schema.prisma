@@ -36,7 +36,6 @@ model Achado {
   item String
   descricao String
   imagem_URL String
-  entregue Boolean
   data_encontrado DateTime
   data_devolvido DateTime?
 

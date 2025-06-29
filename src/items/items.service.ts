@@ -11,8 +11,8 @@ export class ItemsService {
     return 'This action adds a new item';
   }
 
-  findAll() {
-    return this.itemsRepository.findAll();
+  findAll(search: string) {
+    return this.itemsRepository.findAll(search);
   }
 
   findOne(id: number) {
