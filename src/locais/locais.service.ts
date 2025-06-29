@@ -1,26 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { CreateLocaisDto } from './dto/create-locai.dto';
 import { UpdateLocaisDto } from './dto/update-locai.dto';
+import { LocaisRepository } from './locais.repository';
 
 @Injectable()
 export class LocaisService {
-  create(createLocaiDto: CreateLocaisDto) {
-    return 'This action adds a new locai';
+  constructor(private readonly locaisRepository: LocaisRepository) {}
+
+  create(createLocaisDto: CreateLocaisDto) {
+    return this.locaisRepository.create(createLocaisDto);
   }
 
   findAll() {
-    return `This action returns all locais`;
+    return this.locaisRepository.findAll();
   }
 
   findOne(nome: string) {
-    return `This action returns a #${nome} locai`;
+    return this.locaisRepository.findOne(nome);
   }
 
   update(id: number, updateLocaiDto: UpdateLocaisDto) {
-    return `This action updates a #${id} locai`;
+    return this.locaisRepository.update(id, updateLocaiDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} locai`;
+    return this.locaisRepository.remove(id);
   }
 }

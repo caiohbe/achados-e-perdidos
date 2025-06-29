@@ -5,6 +5,7 @@ import { AllExceptionsFilter } from './common/filters/all-exceptions.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
+    cors: true,
     logger: ['log', 'warn', 'error', 'debug'],
   });
   app.useGlobalPipes(

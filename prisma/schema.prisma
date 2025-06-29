@@ -15,7 +15,7 @@ datasource db {
 
 model LocaisSenai {
   id Int @id@default(autoincrement())
-  nome String
+  nome String @unique
 
   achado Achado[]
   @@map("locais_senai")
@@ -35,15 +35,16 @@ model Achado {
   id Int @id@default(autoincrement())
   item String
   descricao String
-  imagem String
+  imagem_URL String
   entregue Boolean
-  data_encontrado DateTime?
+  data_encontrado DateTime
+  data_devolvido DateTime?
 
   local_encontrado LocaisSenai @relation(fields: [local_encontrado_id], references: [id])
   local_encontrado_id Int
 
-  usuario_devolvido User @relation(fields: [usuario_devolvido_id], references: [id])
-  usuario_devolvido_id Int
+  usuario_devolvido User? @relation(fields: [usuario_devolvido_id], references: [id])
+  usuario_devolvido_id Int?
 
   @@map("achados")
 }
