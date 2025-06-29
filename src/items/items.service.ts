@@ -11,8 +11,40 @@ export class ItemsService {
     return 'This action adds a new item';
   }
 
-  findAll(search: string) {
-    return this.itemsRepository.findAll(search);
+  findAll(params: {
+    search?: string;
+    userId?: string;
+    localId?: string;
+    date?: string;
+  }) {
+    const where: any = {};
+
+    if (params.search) {
+      where.item = { startsWith: params.search };
+    }
+
+    if (params.userId === 'none') {
+      where.usuario_devolvido_id = null;
+    } else if (params.userId) {
+      where.usuario_devolvido_id = +params.userId;
+    }
+
+    if (params.localId) {
+      where.local_encontrado_id = +params.localId;
+    }
+
+    if (params.date) {
+      const date = new Date(params.date);
+      const nextDate = new Date(date);
+      nextDate.setDate(date.getDate() + 1);
+
+      where.data_encontrado = {
+        gte: date,
+        lt: nextDate,
+      };
+    }
+
+    return this.itemsRepository.findAll(where);
   }
 
   findOne(id: number) {

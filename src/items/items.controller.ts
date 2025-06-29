@@ -22,8 +22,13 @@ export class ItemsController {
   }
 
   @Get()
-  findAll(@Query('search') search?: string) {
-    return this.itemsService.findAll(search);
+  findAll(
+    @Query('search') search?: string,
+    @Query('userId') userId?: string,
+    @Query('localId') localId?: string,
+    @Query('date') date?: string,
+  ) {
+    return this.itemsService.findAll({ search, userId, localId, date });
   }
 
   @Get(':id')

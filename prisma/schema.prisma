@@ -36,8 +36,8 @@ model Achado {
   item String
   descricao String
   imagem_URL String
-  data_encontrado DateTime
-  data_devolvido DateTime?
+  entregue Boolean
+  data_encontrado DateTime?
 
   local_encontrado LocaisSenai @relation(fields: [local_encontrado_id], references: [id])
   local_encontrado_id Int

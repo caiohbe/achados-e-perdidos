@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import handlePrismaError from 'src/common/errors/prisma-error.handler';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class ItemsRepository {
   constructor(private readonly prisma: PrismaService) {}
-  async findAll(search?: string) {
+  async findAll(where: Prisma.AchadoWhereInput) {
     try {
-      return await this.prisma.achado.findMany({
-        where: search ? { item: { startsWith: search } } : {},
-        include: { usuario_devolvido: true, local_encontrado: true },
+      return this.prisma.achado.findMany({
+        where,
+        include: { local_encontrado: true, usuario_devolvido: true },
       });
     } catch (error) {
       handlePrismaError(error);
