@@ -6,9 +6,9 @@ import { Prisma } from '@prisma/client';
 @Injectable()
 export class ItemsRepository {
   constructor(private readonly prisma: PrismaService) {}
-  async findAll(where: Prisma.AchadoWhereInput) {
+  async findAll(where: Prisma.ItemWhereInput) {
     try {
-      return this.prisma.achado.findMany({
+      return this.prisma.item.findMany({
         where,
         include: { local_encontrado: true, usuario_devolvido: true },
       });

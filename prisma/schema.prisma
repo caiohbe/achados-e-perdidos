@@ -17,7 +17,7 @@ model LocaisSenai {
   id Int @id@default(autoincrement())
   nome String @unique
 
-  achado Achado[]
+  achado Item[]
   @@map("locais_senai")
 }
 
@@ -27,16 +27,15 @@ model User {
   cpf String   @unique
   email String @unique
   
-  achado Achado[]
+  achado Item[]
   @@map("users")
 }
 
-model Achado {
+model Item {
   id Int @id@default(autoincrement())
   item String
   descricao String
-  imagem_URL String
-  entregue Boolean
+  imagem_URL String @db.VarChar(500)
   data_encontrado DateTime?
 
   local_encontrado LocaisSenai @relation(fields: [local_encontrado_id], references: [id])
@@ -45,5 +44,5 @@ model Achado {
   usuario_devolvido User? @relation(fields: [usuario_devolvido_id], references: [id])
   usuario_devolvido_id Int?
 
-  @@map("achados")
+  @@map("items")
 }
