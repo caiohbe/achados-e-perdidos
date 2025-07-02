@@ -170,7 +170,7 @@ async function main() {
         item: 'Pendrive',
         descricao: 'Pendrive de 32GB',
         imagem_URL:
-          'https://images.tcdn.com.br/img/img_prod/586385/pendrive_twist_32gb_multilaser_8377_1_20200406165846.png',
+          'https://img.irroba.com.br/fit-in/600x600/filters:fill(transparent):quality(80)/vexmieoi/catalog/617.png',
         data_encontrado: new Date('2024-06-17'),
         local_encontrado_id: locais[0].id,
         usuario_devolvido_id: usuarios[4].id,
@@ -238,7 +238,7 @@ async function main() {
         item: 'Garrafa térmica',
         descricao: 'Garrafa azul com tampa cromada',
         imagem_URL:
-          'https://www.bagaggio.com.br/arquivos/ids/2343108_2/0160819588001---GARRAFA-TERM-500ML-HOLOGRAFICA--ROXO-U--1-.jpg',
+          'https://tfdfgu.vtexassets.com/arquivos/ids/171454-800-800?v=638749683022700000&width=800&height=800&aspect=true',
         data_encontrado: new Date('2024-05-28'),
         local_encontrado_id: locais[0].id,
       },

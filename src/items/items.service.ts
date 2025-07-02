@@ -8,7 +8,7 @@ export class ItemsService {
   constructor(private readonly itemsRepository: ItemsRepository) {}
 
   create(createItemDto: CreateItemDto) {
-    return 'This action adds a new item';
+    return this.itemsRepository.create(createItemDto);
   }
 
   findAll(params: {
@@ -52,10 +52,10 @@ export class ItemsService {
   }
 
   update(id: number, updateItemDto: UpdateItemDto) {
-    return `This action updates a #${id} item`;
+    return this.itemsRepository.update(id, updateItemDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} item`;
+    return this.itemsRepository.remove(id);
   }
 }
