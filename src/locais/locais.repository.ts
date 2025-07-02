@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { CreateLocaisDto } from './dto/create-locai.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { LocaisSenai } from '@prisma/client';
+import { LocaisSenai, Prisma } from '@prisma/client';
 import handlePrismaError from 'src/common/errors/prisma-error.handler';
 import { UpdateLocaisDto } from './dto/update-locai.dto';
 
@@ -19,9 +19,11 @@ export class LocaisRepository {
     }
   }
 
-  async findAll(): Promise<LocaisSenai[]> {
+  async findAll(where: Prisma.LocaisSenaiWhereInput): Promise<LocaisSenai[]> {
     try {
-      return await this.prisma.locaisSenai.findMany();
+      return await this.prisma.locaisSenai.findMany({
+        where,
+      });
     } catch (error) {
       handlePrismaError(error);
     }

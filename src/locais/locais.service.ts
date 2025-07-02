@@ -11,8 +11,13 @@ export class LocaisService {
     return this.locaisRepository.create(createLocaisDto);
   }
 
-  findAll() {
-    return this.locaisRepository.findAll();
+  findAll(params: { search?: string }) {
+    const where: any = {};
+
+    if (params.search) {
+      where.nome = { startsWith: params.search };
+    }
+    return this.locaisRepository.findAll(where);
   }
 
   findOne(nome: string) {

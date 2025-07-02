@@ -8,6 +8,7 @@ import {
   Delete,
   ParseIntPipe,
   ValidationPipe,
+  Query,
 } from '@nestjs/common';
 import { LocaisService } from './locais.service';
 import { CreateLocaisDto } from './dto/create-locai.dto';
@@ -23,8 +24,8 @@ export class LocaisController {
   }
 
   @Get()
-  findAll() {
-    return this.locaisService.findAll();
+  findAll(@Query('search') search?: string) {
+    return this.locaisService.findAll({ search });
   }
 
   @Get(':nome')

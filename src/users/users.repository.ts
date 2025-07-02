@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 import { UpdateUserDto } from './dto/update-user.dto';
 import handlePrismaError from 'src/common/errors/prisma-error.handler';
+import { startWith } from 'rxjs';
 
 @Injectable()
 export class UsersRepository {
@@ -19,19 +20,19 @@ export class UsersRepository {
     }
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(where: Prisma.UserWhereInput): Promise<User[]> {
     try {
-      return await this.prisma.user.findMany();
+      return await this.prisma.user.findMany({ where });
     } catch (error) {
       handlePrismaError(error);
     }
   }
 
-  async findOne(cpf: string): Promise<User> {
+  async findOne(nome: string): Promise<User> {
     try {
-      return await this.prisma.user.findUniqueOrThrow({
+      return await this.prisma.user.findFirst({
         where: {
-          cpf,
+          nome: { startsWith: nome },
         },
       });
     } catch (error) {

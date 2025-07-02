@@ -8,6 +8,7 @@ import {
   Delete,
   ValidationPipe,
   ParseIntPipe,
+  Query,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -23,13 +24,13 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
-    return this.usersService.findAll();
+  findAll(@Query('search') search?: string) {
+    return this.usersService.findAll({ search });
   }
 
-  @Get(':cpf')
-  findOne(@Param('cpf') cpf: string) {
-    return this.usersService.findOne(cpf);
+  @Get(':name')
+  findOne(@Param('name') name: string) {
+    return this.usersService.findOne(name);
   }
 
   @Patch(':id')

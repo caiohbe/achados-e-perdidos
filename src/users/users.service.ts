@@ -1,9 +1,4 @@
-import {
-  HttpException,
-  HttpStatus,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersRepository } from './users.repository';
@@ -17,12 +12,18 @@ export class UsersService {
     return this.usersRepository.create(createUserDto);
   }
 
-  findAll(): Promise<User[]> {
-    return this.usersRepository.findAll();
+  findAll(params: { search?: string }): Promise<User[]> {
+    const where: any = {};
+
+    if (params.search) {
+      where.nome = { startsWith: params.search };
+    }
+
+    return this.usersRepository.findAll(where);
   }
 
-  findOne(cpf: string): Promise<User> {
-    return this.usersRepository.findOne(cpf);
+  findOne(name: string): Promise<User> {
+    return this.usersRepository.findOne(name);
   }
 
   update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
